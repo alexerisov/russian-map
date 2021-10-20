@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/usr/src/app
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - ./backend/data:/usr/src/app/data
+    command: json-server --port 8081 --host 0.0.0.0 data/data.json
+    ports:
+      - "8081:8081"
