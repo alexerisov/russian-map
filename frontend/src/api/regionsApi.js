@@ -5,8 +5,8 @@ export const regionsSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: domain }),
     endpoints: builder => ({
-        getPosts: builder.query({
-            query: () => '/posts'
+        getRegions: builder.query({
+            query: () => '/regions'
         })
     })
 })
