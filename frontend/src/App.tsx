@@ -39,11 +39,7 @@ function App() {
                 : isError
                     ? <Alert severity="error">
                         <AlertTitle>Something went wrong</AlertTitle>
-                        error?.status && {JSON.stringify(error)}
-                        error?.data && {JSON.stringify(error)}
-                        error?.code && {JSON.stringify(error)}
                         error?.message && {JSON.stringify(error)}
-
                     </Alert>
                     : <RussianMap
                         regions={data}
