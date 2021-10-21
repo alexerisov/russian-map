@@ -1,6 +1,6 @@
 import { Colors } from "./constants"
 
-export const getColor = (regionId: number): string => {
+export const getColor = (regionId: any): string => {
     if (regionId < 10) {
         return Colors.green
     }
