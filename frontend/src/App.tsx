@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {MouseEventHandler, useState} from 'react';
 import './App.css';
 import RussianMap from "./components/RussianMap";
 import {useGetRegionsQuery} from "./api/regionsApi";
 import {CircularProgress, Container} from "@mui/material";
 import RegionPopup from './components/RegionPopup';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 function App() {
-    const {data, error, isLoading} = useGetRegionsQuery({skip: false})
+    const {data, error, isLoading, isError} = useGetRegionsQuery()
 
     const [hoveredRegionId, setHoveredRegionId] = useState(0)
     const [isPopupVisible, setIsPopupVisible] = useState(false)
@@ -15,7 +17,7 @@ function App() {
         left: 0
     })
 
-    const onMouseMoveHandler = (e: any, id: any) => {
+    const onMouseMoveHandler = (e: MouseEvent, id: number): void => {
         let x = document.body.scrollLeft;
         let y = document.body.scrollTop;
         setHoveredRegionId(id)
@@ -26,7 +28,7 @@ function App() {
         setIsPopupVisible(true)
     }
 
-    const onMouseOutHandler = (e: any) => {
+    const onMouseOutHandler: MouseEventHandler = () => {
         setIsPopupVisible(false)
     }
 
@@ -34,11 +36,20 @@ function App() {
         <Container className="App">
             {isLoading
                 ? <CircularProgress/>
-                : <RussianMap
-                    regions={data}
-                    onRegionMouseMove={onMouseMoveHandler}
-                    onRegionMouseOut={onMouseOutHandler}
-                />
+                : isError
+                    ? <Alert severity="error">
+                        <AlertTitle>Something went wrong</AlertTitle>
+                        error?.status && {JSON.stringify(error)}
+                        error?.data && {JSON.stringify(error)}
+                        error?.code && {JSON.stringify(error)}
+                        error?.message && {JSON.stringify(error)}
+
+                    </Alert>
+                    : <RussianMap
+                        regions={data}
+                        onRegionMouseMove={onMouseMoveHandler}
+                        onRegionMouseOut={onMouseOutHandler}
+                    />
             }
             <RegionPopup
                 region={data?.[hoveredRegionId]}

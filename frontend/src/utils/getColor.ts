@@ -10,5 +10,5 @@ export const getColor = (regionId: number): string => {
     if (regionId > 30) {
         return Colors.red
     }
-    return Colors.white
+    return Colors.gray
 }

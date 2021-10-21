@@ -3,8 +3,9 @@ import Popover from "@mui/material/Popover";
 import {Star} from "@mui/icons-material";
 import React from "react";
 import {getColor} from "../../utils/getColor";
+import {RegionPopupProps} from "../../types";
 
-export const RegionPopup = (props: any) => {
+export const RegionPopup = (props: RegionPopupProps) => {
     const {
         region,
         ...otherProps

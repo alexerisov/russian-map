@@ -1,7 +1,9 @@
 import React from 'react';
 import {getColor} from "../../utils/getColor";
+import {Colors} from "../../utils/constants";
+import { RegionType, RussianMapProps } from '../../types';
 
-const RussianMap = (props) => {
+const RussianMap = (props: RussianMapProps) => {
     const {
         regions,
         onRegionMouseMove,
@@ -18,14 +20,14 @@ const RussianMap = (props) => {
                  y="0px"
                  version="1.1">
 
-                {regions.map((item, id) =>
+                {regions?.map((item: RegionType, id: number) =>
                     <path key={id}
                           id={`${item.code}`}
                           className={"russian-map-region"}
                           d={item.path}
                           fill={getColor(item.key)}
-                          stroke="white"
-                          strokeWidth={2}
+                          stroke={Colors.black}
+                          strokeWidth={1}
                           onMouseMove={(e) => onRegionMouseMove(e, id)}
                           onMouseOut={onRegionMouseOut}/>
                 )}
