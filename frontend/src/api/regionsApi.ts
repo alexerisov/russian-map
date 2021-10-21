@@ -10,8 +10,8 @@ export const regionsSlice = createApi({
     endpoints: builder => ({
         getRegions: builder.query<RegionsArray, void>({
             query: () => '/regions',
-            transformResponse: (rawResult: { result: { regions: RegionsArray } }) => {
-                return rawResult.result.regions
+            transformResponse: (rawResult: RegionsArray ) => {
+                return rawResult
             }
         })
     })
