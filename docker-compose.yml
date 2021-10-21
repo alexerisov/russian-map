@@ -4,10 +4,10 @@ services:
   frontend:
     build:
       context: ./frontend
-    volumes:
-      - ./frontend:/usr/src/app
     depends_on:
       - backend
+    ports:
+      - "80:80"
 
   backend:
     build:
