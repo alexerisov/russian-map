@@ -1,3 +1,3 @@
-import RussianMap from "./RussianMap";
+import RussianMap from './RussianMap';
 
-export default RussianMap
+export default RussianMap;

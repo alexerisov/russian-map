@@ -1,3 +1,3 @@
-import {RegionPopup} from "./RegionPopup";
+import { RegionPopup } from './RegionPopup';
 
-export default RegionPopup
+export default RegionPopup;
