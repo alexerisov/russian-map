@@ -6,4 +6,8 @@
   text-align: center;
 }
 
+path:hover {
+  filter: brightness(1.5);
+}
+
 

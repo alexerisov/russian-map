@@ -24,7 +24,7 @@ const RussianMap = (props: RussianMapProps) => {
 
         {regions?.map((item: RegionType, id: number) => (
           <path
-            key={id}
+            key={item.code}
             id={`${item.code}`}
             className="russian-map-region"
             d={item.path}
