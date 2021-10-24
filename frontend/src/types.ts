@@ -15,5 +15,5 @@ export interface RussianMapProps {
 }
 
 export interface RegionPopupProps extends PopoverProps{
-  region: RegionType | undefined
+  region: any | undefined
 }

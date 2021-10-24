@@ -1,7 +1,26 @@
 import React from 'react';
+import { geoAlbers } from 'd3-geo';
+import {
+  ComposableMap,
+  Geographies,
+  Geography, ProjectionFunction,
+  ZoomableGroup,
+} from 'react-simple-maps';
+import { Container } from '@mui/material';
 import { getColor } from '../../utils/getColor';
 import { Colors } from '../../utils/constants';
-import { RegionType, RussianMapProps } from '../../types';
+import { RussianMapProps } from '../../types';
+import { getIdFromRsmKey } from '../../utils/getIdFromRsmKey';
+
+const width = 800;
+const height = 600;
+
+const projection = geoAlbers()
+  .rotate([-105, 0])
+  .center([-10, 65])
+  .parallels([52, 64])
+  .scale(600)
+  .translate([width / 2, height / 2]) as any as ProjectionFunction;
 
 const RussianMap = (props: RussianMapProps) => {
   const {
@@ -10,39 +29,48 @@ const RussianMap = (props: RussianMapProps) => {
     onRegionMouseOut,
   } = props;
 
+  const defaultStyle = {
+    strokeWidth: 0.75,
+    stroke: Colors.black,
+    outline: 'none',
+    transition: 'all 250ms',
+  };
+
+  const hoveredStyle = {
+    strokeWidth: 0.75,
+    outline: 'none',
+    transition: 'all 250ms',
+    filter: 'brightness(1.5)',
+  };
+
   return (
-    <div>
-      <svg
-        width="100%"
-        height="689"
-        className="russian-map"
-        viewBox="-365 196 1188 689"
-        x="0px"
-        y="0px"
-        version="1.1"
-      >
-
-        {regions?.map((item: RegionType, id: number) => (
-          <path
-            key={item.code}
-            id={`${item.code}`}
-            className="russian-map-region"
-            d={item.path}
-            fill={getColor(item.key)}
-            stroke={Colors.black}
-            strokeWidth={1}
-            onMouseMove={(e) => onRegionMouseMove(e, id)}
-            onMouseOut={onRegionMouseOut}
-          />
-        ))}
-
-        <g>
-          <circle cx="-212.1" cy="408.5" r="2.3" fill="red" className="russian-map-capital" />
-          <circle cx="-364.3" cy="592.3" r="2.3" fill="red" className="russian-map-capital" />
-          <circle cx="-216.1" cy="500.7" r="2.3" fill="red" className="russian-map-capital" />
-        </g>
-      </svg>
-    </div>
+    <Container className="map-wrapper">
+      <ComposableMap projection={projection} width={width} height={height}>
+        <ZoomableGroup zoom={1}>
+          <Geographies geography={regions}>
+            {({ geographies }) => geographies.map((geo) => (
+              <Geography
+                key={geo.rsmKey}
+                onMouseEnter={(e) => onRegionMouseMove(e, geo as ReturnType<typeof geo>)}
+                onMouseLeave={onRegionMouseOut}
+                geography={geo}
+                style={{
+                  default: {
+                    ...defaultStyle,
+                    fill: getColor(getIdFromRsmKey(geo.rsmKey)),
+                  },
+                  hover: {
+                    ...defaultStyle,
+                    fill: getColor(getIdFromRsmKey(geo.rsmKey)),
+                    ...hoveredStyle,
+                  },
+                }}
+              />
+            ))}
+          </Geographies>
+        </ZoomableGroup>
+      </ComposableMap>
+    </Container>
   );
 };
 

@@ -1,9 +1,12 @@
-.App {
-  height: 100%;
-  display: flex !important;
+#root {
+  display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+}
+
+.map-wrapper {
+  border: 1px solid black;
+  overflow: hidden;
 }
 
 path:hover {

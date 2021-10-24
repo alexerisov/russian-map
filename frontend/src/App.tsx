@@ -12,21 +12,22 @@ function App() {
     data, error, isLoading, isError,
   } = useGetRegionsQuery();
 
-  const [hoveredRegionId, setHoveredRegionId] = useState(0);
+  const [hoveredRegion, setHoveredRegion] = useState({} as any);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({
     top: 0,
     left: 0,
   });
 
-  const onMouseMoveHandler = (e: MouseEvent, id: number): void => {
+  const onMouseMoveHandler = (e: MouseEvent, region: any): void => {
     const x = document.body.scrollLeft;
     const y = document.body.scrollTop;
-    setHoveredRegionId(id);
+    setHoveredRegion(region);
     setCursorPosition({
       left: (e.pageX - x) + 10,
       top: (e.pageY - y) + 10,
     });
+    console.log('cursor', cursorPosition);
     setIsPopupVisible(true);
   };
 
@@ -35,15 +36,13 @@ function App() {
   };
 
   return (
-    <Container className="App">
+    <Container className="App" sx={{ display: 'flex', justifyContent: 'center' }}>
       {isLoading
         ? <CircularProgress />
         : isError
           ? (
             <Alert severity="error">
               <AlertTitle>Something went wrong</AlertTitle>
-              error?.message &&
-              {' '}
               {JSON.stringify(error)}
             </Alert>
           )
@@ -55,7 +54,7 @@ function App() {
             />
           )}
       <RegionPopup
-        region={data?.[hoveredRegionId]}
+        region={hoveredRegion}
         open={isPopupVisible}
         anchorPosition={cursorPosition}
       />
