@@ -27,7 +27,6 @@ function App() {
       left: (e.pageX - x) + 10,
       top: (e.pageY - y) + 10,
     });
-    console.log('cursor', cursorPosition);
     setIsPopupVisible(true);
   };
 

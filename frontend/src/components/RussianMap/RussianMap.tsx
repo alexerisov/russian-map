@@ -51,7 +51,7 @@ const RussianMap = (props: RussianMapProps) => {
             {({ geographies }) => geographies.map((geo) => (
               <Geography
                 key={geo.rsmKey}
-                onMouseEnter={(e) => onRegionMouseMove(e, geo as ReturnType<typeof geo>)}
+                onMouseMove={(e) => onRegionMouseMove(e, geo as ReturnType<typeof geo>)}
                 onMouseLeave={onRegionMouseOut}
                 geography={geo}
                 style={{
