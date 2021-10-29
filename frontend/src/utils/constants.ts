@@ -1,4 +1,4 @@
-export const domain = 'http://localhost:8081';
+export const domain = 'http://localhost:8081'
 
 export enum Colors {
   red = '#FF7172',
